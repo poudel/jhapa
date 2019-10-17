@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>
+        <form method="post" action="">
+            {% csrf_token %}
+
+            <table>
+                {{ form }}
+                {{ form.errors }}
+            </table>
+
+            <div class="mt2">
+                <input class="ba ph2 pv1" type="submit" value="register">
+            </div>
+        </form>
+    </div>
+{% endblock content %}

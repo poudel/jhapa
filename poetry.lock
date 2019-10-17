@@ -54,6 +54,14 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "0.4.1"
 
 [[package]]
+category = "main"
+description = "Detect confusable usage of unicode homoglyphs, prevent homograph attacks."
+name = "confusable-homoglyphs"
+optional = false
+python-versions = "*"
+version = "3.2.0"
+
+[[package]]
 category = "dev"
 description = "Better living through Python with decorators"
 name = "decorator"
@@ -104,6 +112,18 @@ version = "0.10.0"
 [package.dependencies]
 Django = ">=1.11"
 django-js-asset = "*"
+
+[[package]]
+category = "main"
+description = "An extensible user-registration application for Django"
+name = "django-registration"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+version = "3.0.1"
+
+[package.dependencies]
+Django = ">=1.11"
+confusable-homoglyphs = ">=3.0,<4.0"
 
 [[package]]
 category = "dev"
@@ -327,7 +347,7 @@ python-versions = "*"
 version = "1.11.2"
 
 [metadata]
-content-hash = "e17cb5cf1cc04a61b07c051d387e962eea5627d6b6093e18bef27eac925b09eb"
+content-hash = "59ed3cd195c46b92a4ef141fad31679c7e52f38b050b364df2843c258e58d044"
 python-versions = "^3.7"
 
 [metadata.hashes]
@@ -336,11 +356,13 @@ astroid = ["98c665ad84d10b18318c5ab7c3d203fe11714cbad2a4aef4f44651f415392754", "
 backcall = ["38ecd85be2c1e78f77fd91700c76e14667dc21e2713b63876c0eb901196e01e4", "bbbf4b1e5cd2bdb08f915895b51081c041bac22394fdfcfdfbe9f14b77c08bf2"]
 bleach = ["213336e49e102af26d9cde77dd2d0397afabc5a6bf2fed985dc35b5d1e285a16", "3fdf7f77adcf649c9911387df51254b813185e32b2c6619f690b593a617e19fa"]
 colorama = ["05eed71e2e327246ad6b38c540c4a3117230b19679b875190486ddd2d721422d", "f8ac84de7840f5b9c4e3347b3c1eaa50f7e49c2b07596221daec5edaabbd7c48"]
+confusable-homoglyphs = ["3b4a0d9fa510669498820c91a0bfc0c327568cecec90648cf3819d4a6fc6a751", "e3ce611028d882b74a5faa69e3cbb5bd4dcd9f69936da6e73d33eda42c917944"]
 decorator = ["86156361c50488b84a3f148056ea716ca587df2f0de1d34750d35c21312725de", "f069f3a01830ca754ba5258fde2278454a0b5b79e0d7f5c13b3b97e57d4acff6"]
 django = ["4025317ca01f75fc79250ff7262a06d8ba97cd4f82e93394b2a0a6a4a925caeb", "a8ca1033acac9f33995eb2209a6bf18a4681c3e5269a878e9a7e0b7384ed1ca3"]
 django-debug-toolbar = ["17c53cd6bf4e7d69902aedf9a1d26c5d3b7369b54c5718744704f27b5a72f35d", "9a23ada2e43cd989195db3c18710b5d7451134a0d48127ab64c1d2ad81700342"]
 django-js-asset = ["8ec12017f26eec524cab436c64ae73033368a372970af4cf42d9354fcb166bdd", "c163ae80d2e0b22d8fb598047cd0dcef31f81830e127cfecae278ad574167260"]
 django-mptt = ["6bf9eb26e54e92006ca82108a1c946c7df533ec27bddf3f795a83a32a3d1b04b", "c765c1501dd0b5c22f0ca8b948550bd294cd2db68aefa0560c6ed7fcfdf4b95e"]
+django-registration = ["5193f8a8f8b5ee9f3cc6ae3b561739d17f69759b9abe72f33aec07467a99eeff", "88673ceecb09413493f78a2847cb78da8df47d4d6629aee6a17d9e3c6c66c444"]
 ipython = ["c4ab005921641e40a68e405e286e7a1fcc464497e14d81b6914b4fd95e5dee9b", "dd76831f065f17bddd7eaa5c781f5ea32de5ef217592cf019e34043b56895aa1"]
 ipython-genutils = ["72dd37233799e619666c9f639a9da83c34013a73e8bbc79a7a6348d93c61fab8", "eb2e116e75ecef9d4d228fdc66af54269afa26ab4463042e33785b887c628ba8"]
 isort = ["54da7e92468955c4fceacd0c86bd0ec997b0e1ee80d97f67c35a78b719dccab1", "6e811fcb295968434526407adb8796944f1988c5b65e8139058f2014cbe100fd"]

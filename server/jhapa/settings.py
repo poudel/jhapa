@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'django.contrib.humanize',
+    'django_registration',
     'mptt',
     'gears',
     'links',
@@ -141,3 +142,6 @@ FIXTURE_DIRS = [
 ]
 
 AUTH_USER_MODEL = "gears.User"
+
+REGISTRATION_OPEN = True
+ACCOUNT_ACTIVATION_DAYS = 1
