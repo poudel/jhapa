@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load mptt_tags %}
+
+{% block content %}
+    <div class="pv2 pl2 pr4 mt2">
+        {% include "links/post_item.html" %}
+
+        <div class="mt3">
+            <div class="mt3">
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <div>
+                        {{ form.content }}
+                        {{ form.content.errors }}
+                    </div>
+                    <div class="mt2">
+                        <input class="ba ph2 pv1" type="submit" value="reply" {% if not request.user.is_authenticated %}disabled{% endif %}>
+                    </div>
+                </form>
+            </div>
+
+            <ul class="list pl0 mt4 lh-copy">
+                {% recursetree object.get_descendants %}
+
+                <li class="mb2">
+                    <div class="silver">
+                        {{ node.user }}
+
+                        <span class="ml1" title="{{ node.created_at }}">
+                            {{ node.created_at|naturaltime }}
+                        </span>
+                    </div>
+
+                    <div class="mt1">
+                        {{ node.content|linebreaksbr }}
+                    </div>
+
+                    {% if request.user.is_authenticated %}
+                    <div class="f6 b mt1">
+                        <a class="link navy underline " href="{% url 'post-detail' node.slug %}">reply</a>
+                    </div>
+                    {% endif %}
+
+                    {% if not node.is_leaf_node %}
+                        <ul class="list children ml1 pl2 mt3">
+                            {{ children }}
+                        </ul>
+                    {% endif %}
+                </li>
+                {% endrecursetree %}
+            </ul>
+
+        </div>
+    </div>
+{% endblock %}

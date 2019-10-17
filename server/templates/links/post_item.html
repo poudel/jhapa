@@ -1,0 +1,35 @@
+{% load humanize %}
+
+<div class="pr2 mb1">
+    {% url "post-detail" object.slug as detail_url %}
+
+    <div>
+        <a class="link navy dim link-visited-gray b" href="{{ object.url|default:detail_url }}" {% if object.url %}target="_blank"{% endif %}>
+            {% if object.title %}
+                {{ object.title }}
+            {% else %}
+                {{ object.content }}
+            {% endif %}
+        </a>
+        
+        {% if object.url %}
+            <span class="f7 light-silver">
+                [{{ object.domain }}]
+            </span>
+        {% endif %}
+        
+        <div class="f7 light-silver mt1">
+            {% with comment_count=object.get_descendant_count %}
+                <a class="link gray" href="{{ detail_url }}">
+                    {{ comment_count }} comment{{ comment_count|pluralize }}
+                </a>
+            {% endwith %}
+            |
+            
+            via {{ object.user }}
+            <span title="{{ object.created_at }}">
+                at {{ object.created_at|time }}
+            </span>
+        </div>
+    </div>
+</div>

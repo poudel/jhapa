@@ -1,0 +1,5 @@
+#id_tags li {display: inline;}
+
+a.link-visited-gray:visited {
+    color: #aaaaaa;
+}

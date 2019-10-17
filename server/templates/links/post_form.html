@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <div class="pa2">
+        <form method="post" action="{{ request.path }}">
+            {% csrf_token %}
+            <table>
+                {% for field in form %}
+                    <tr>
+                        <td>{{ field.label }}</td>
+                        <td>
+                            {{ field }}
+                            <span class="red">
+                                {{ field.errors.0 }}
+                            </span>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                <tr><td></td></tr>
+                <tr><td></td></tr>
+
+                <tr>
+                    <td></td>
+                    <td class="pl2">
+                        <input class="ba ph2 pv1" type="submit" value="submit">
+                    </td>
+                </tr>
+
+            </table>
+        </form>
+    </div>
+{% endblock %}

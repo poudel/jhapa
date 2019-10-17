@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block content %}
+    <div class="ph2">
+        <ul class="list pl0 mt3">
+            {% for object in object_list %}
+
+                {% ifchanged object.created_at.date %}
+                <li class="mb3 f6">
+                    {{ object.created_at.date }}
+                    <div class="cf"></div>
+                </li>
+                {% endifchanged %}
+
+                <li class="mb3">
+                    {% include "links/post_item.html" %}
+                    <div class="cf"></div>
+                </li>
+            {% empty %}
+                <li>
+                    Fill what's empty. Empty what's full.
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

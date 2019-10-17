@@ -1,0 +1,40 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>{% if page_title %}{{ page_title }} - {% endif %}{{ request.site.name }}</title>
+        <meta name="description" content="{{ page_description }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="theme-color" content="#137752"/>
+        <link rel="stylesheet" href="{% static 'tachyons.min.css' %}">
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+    </head>
+    <body class="sans-serif near-black">
+        <div class="mw9 center ph5-ns mt1">
+            <div class="ph2 pv2 bb b--light-gray">
+
+                <a class="link black b mt1 mb1 f4" href="/">
+                    {{ request.site.name }}
+                </a>
+
+                {% if request.user.is_authenticated %}
+                    <div class="dib ml3 f6">
+                        <a class="link navy b" href="{% url 'post-create' %}">submit</a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="cf">
+                <div class="fl w-100 w-100-ns">
+                    <div>
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </body>
+</html>
