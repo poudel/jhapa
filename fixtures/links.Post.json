@@ -1,0 +1,112 @@
+[
+{
+    "model": "links.post",
+    "pk": 1,
+    "fields": {
+        "created_at": "2019-10-17T19:27:24.400Z",
+        "modified_at": "2019-10-17T19:27:24.417Z",
+        "user": 1,
+        "site": 1,
+        "parent": null,
+        "title": "meta: test post",
+        "slug": "meta-test-post-mVyw",
+        "url": "",
+        "content": "Jhapa is a simple link aggregator written in Python/Django. This is the first post.",
+        "status": "Published",
+        "upvotes": 1,
+        "downvotes": 0,
+        "lft": 1,
+        "rght": 10,
+        "tree_id": 1,
+        "level": 0
+    }
+},
+{
+    "model": "links.post",
+    "pk": 2,
+    "fields": {
+        "created_at": "2019-10-17T19:27:33.518Z",
+        "modified_at": "2019-10-17T19:27:33.525Z",
+        "user": 1,
+        "site": 1,
+        "parent": 1,
+        "title": "",
+        "slug": "test-first-comment-Dyvq",
+        "url": "",
+        "content": "test first comment",
+        "status": "Published",
+        "upvotes": 1,
+        "downvotes": 0,
+        "lft": 2,
+        "rght": 7,
+        "tree_id": 1,
+        "level": 1
+    }
+},
+{
+    "model": "links.post",
+    "pk": 3,
+    "fields": {
+        "created_at": "2019-10-17T19:27:42.527Z",
+        "modified_at": "2019-10-17T19:27:42.534Z",
+        "user": 1,
+        "site": 1,
+        "parent": 2,
+        "title": "",
+        "slug": "test-first-comment-response-RHeZ",
+        "url": "",
+        "content": "test first comment response",
+        "status": "Published",
+        "upvotes": 1,
+        "downvotes": 0,
+        "lft": 3,
+        "rght": 6,
+        "tree_id": 1,
+        "level": 2
+    }
+},
+{
+    "model": "links.post",
+    "pk": 4,
+    "fields": {
+        "created_at": "2019-10-17T19:27:53.625Z",
+        "modified_at": "2019-10-17T19:27:53.636Z",
+        "user": 1,
+        "site": 1,
+        "parent": 1,
+        "title": "",
+        "slug": "test-second-comment-MhYj",
+        "url": "",
+        "content": "test second comment",
+        "status": "Published",
+        "upvotes": 1,
+        "downvotes": 0,
+        "lft": 8,
+        "rght": 9,
+        "tree_id": 1,
+        "level": 1
+    }
+},
+{
+    "model": "links.post",
+    "pk": 5,
+    "fields": {
+        "created_at": "2019-10-17T19:28:04.063Z",
+        "modified_at": "2019-10-17T19:28:04.086Z",
+        "user": 1,
+        "site": 1,
+        "parent": 3,
+        "title": "",
+        "slug": "test-second-comment-response-X5rJ",
+        "url": "",
+        "content": "test second comment response",
+        "status": "Published",
+        "upvotes": 1,
+        "downvotes": 0,
+        "lft": 4,
+        "rght": 5,
+        "tree_id": 1,
+        "level": 3
+    }
+}
+]
