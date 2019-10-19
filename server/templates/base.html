@@ -20,14 +20,27 @@
                 </a>
 
                 <div class="dib ml3 f6">
-                    <a class="link navy b" href="/pages/about/">about</a>
-
-                    <a class="ml2 link navy b" href="/pages/terms/">terms</a>
+                    <a class="link navy b" href="{% url 'ask-posts' %}">ask</a>
+                    <a class="ml2 link navy b" href="{% url 'show-posts' %}">show</a>
 
                     {% if request.user.is_authenticated %}
                         <a class="ml2 link navy b" href="{% url 'post-create' %}">submit</a>
                     {% endif %}
+
+                    <a class="ml2 link navy b" href="/pages/about/">about</a>
+                    <a class="ml2 link navy b" href="/pages/terms/">terms</a>
                 </div>
+
+                <div class="fr dib f6 mt1">
+                    {% if request.user.is_authenticated %}
+                        ({{ request.user.username }})
+                        <a class="link navy b" href="{% url 'logout' %}">logout</a>
+                    {% else %}
+                        <a class="link navy b" href="{% url 'login' %}">login</a>
+                    {% endif %}
+                </div>
+
+                <div class="cf"></div>
 
             </div>
 

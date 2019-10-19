@@ -2,15 +2,15 @@
 
 {% block content %}
     <div>
-        <form method="post" action="{% url 'django_registration_register' %}">
+        <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
 
-                {{ form.as_p }}
-                {{ form.errors }}
+            {{ form.as_p }}
 
             <div class="mt2">
                 <input class="ba ph2 pv1" type="submit" value="register">
             </div>
         </form>
+
     </div>
 {% endblock content %}
