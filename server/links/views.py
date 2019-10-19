@@ -28,6 +28,20 @@ class RecentPostList(PostListMixin, ListView):
         return super().get_queryset().filter(created_at__gte=recent)
 
 
+class AskPostList(RecentPostList):
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(title__istartswith="Ask")
+
+
+class ShowPostList(RecentPostList):
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(title__istartswith="Show")
+
+
 class PostDetailView(FormMixin, DetailView):
     model = Post
     form_class = ReplyForm
