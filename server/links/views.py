@@ -1,10 +1,14 @@
 from datetime import timedelta
+
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView
 from django.views.generic.edit import FormMixin
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
 from django.utils import timezone
-from links.models import Post
+from django.shortcuts import get_object_or_404
+
+from links.models import Post, Flag
 from links.forms import PostForm, ReplyForm
 
 
@@ -29,22 +33,23 @@ class RecentPostList(PostListMixin, ListView):
 
 
 class AskPostList(RecentPostList):
-
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.filter(title__istartswith="Ask")
+        return queryset.filter(title__istartswith="Ask:")
 
 
 class ShowPostList(RecentPostList):
-
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.filter(title__istartswith="Show")
+        return queryset.filter(title__istartswith="Show:")
 
 
-class PostDetailView(FormMixin, DetailView):
+class PostDetailView(AccessMixin, FormMixin, DetailView):
     model = Post
     form_class = ReplyForm
+
+    # return error response if the user doesn't have permission to access
+    raise_exception = True
 
     def get_form_kwargs(self):
         kw = super().get_form_kwargs()
@@ -55,7 +60,10 @@ class PostDetailView(FormMixin, DetailView):
         root = self.object.get_root()
         return reverse("post-detail", args=[root.slug])
 
-    def post(self, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+
         self.object = self.get_object()
 
         form = self.get_form()
@@ -70,6 +78,23 @@ class PostDetailView(FormMixin, DetailView):
         form.instance.parent = self.object
         form.save()
         return super().form_valid(form)
+
+
+class PostFlagView(LoginRequiredMixin, CreateView):
+    model = Flag
+    fields = ["reason"]
+
+    def dispatch(self, request, *args, **kwargs):
+        post_slug = kwargs['post_slug']
+        self.post_item = get_object_or_404(Post, site=request.site, slug=post_slug)
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(post_item=self.post_item, **kwargs)
+
+    def form_valid(self, form):
+        Flag.flag(self.post_item.id, self.request.user.id, form.instance.reason)
+        return HttpResponseRedirect("/")
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):

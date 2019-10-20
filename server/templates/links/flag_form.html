@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>
+        <form method="post" action="{% url 'post-flag' post_item.slug %}">
+            {% csrf_token %}
+
+            <div>
+                <h4>You are about to flag the following item:</h4>
+
+                {% include "links/post_item.html" with object=post_item %}
+
+                <h4>Please select a reason:</h4>
+            </div>
+
+            <div class="mt2">
+                {{ form.as_p }}
+            </div>
+
+            <input class="ba ph2 pv1" type="submit" value="submit">
+
+        </form>
+    </div>
+{% endblock %}

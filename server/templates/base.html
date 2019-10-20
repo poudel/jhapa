@@ -36,6 +36,8 @@
                         ({{ request.user.username }})
                         <a class="link navy b" href="{% url 'logout' %}">logout</a>
                     {% else %}
+                        <a class="link navy b" href="{% url 'django_registration_register' %}">register</a>
+                        /
                         <a class="link navy b" href="{% url 'login' %}">login</a>
                     {% endif %}
                 </div>

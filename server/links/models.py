@@ -9,11 +9,11 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
 from mptt.models import MPTTModel, TreeForeignKey
 
-from gears.models import BaseModel
+from gears.models import BaseModel, User
 from gears.utils import get_random_string
 
 
-__all__ = ["Post"]
+__all__ = ["Post", "Vote", "Flag"]
 
 
 class Post(MPTTModel, BaseModel):
@@ -47,9 +47,6 @@ class Post(MPTTModel, BaseModel):
         _("status"), max_length=30, choices=STATUS_CHOICES, db_index=True, default="Published"
     )
 
-    upvotes = models.IntegerField(_("upvotes"), default=0)
-    downvotes = models.IntegerField(_("downvotes"), default=0)
-
     class Meta:
         unique_together = [("site", "slug")]
         verbose_name = _("Post")
@@ -77,12 +74,70 @@ class Post(MPTTModel, BaseModel):
         self.title = bleach.clean(self.title, tags=[])
         self.content = bleach.clean(self.content, tags=[])
 
-        if not self.pk:
-            self.upvotes = 1
-
         super().save(*args, **kwargs)
+
+        Vote.upvote(self.id, self.user_id)
 
     @property
     def domain(self):
         if self.url:
             return urlparse(self.url).netloc.split("www.")[-1]
+
+
+class Vote(BaseModel):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name=_("post"))
+
+    # todo: make this nullable and add a sentinel user ? because we
+    # want to retain the votes even if user is deleted
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("user"))
+
+    VOTE_TYPES = [("upvote", "upvote"), ("downvote", "downvote")]
+    vote_type = models.CharField(_("vote type"), max_length=20, choices=VOTE_TYPES)
+    remarks = models.CharField(_("remarks"), max_length=250, blank=True)
+
+    class Meta:
+        unique_together = [("post", "user")]
+
+    def __str__(self):
+        return f"{self.post} -> {self.user} -> {self.get_vote_type_display()}"
+
+    @classmethod
+    def vote(cls, post_id, user_id, vote_type, remarks):
+        cls.objects.get_or_create(
+            post_id=post_id, user_id=user_id, defaults={"vote_type": vote_type, "remarks": remarks}
+        )
+
+    @classmethod
+    def upvote(cls, post_id, user_id, remarks=""):
+        cls.vote(post_id, user_id, "upvote", remarks)
+
+    @classmethod
+    def downvote(cls, post_id, user_id, remarks=""):
+        cls.vote(post_id, user_id, "downvote", remarks)
+
+
+class Flag(BaseModel):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name=_("post"))
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("user"))
+
+    FLAG_REASONS = [("spam", "spam"), ("off_topic", "off topic")]
+
+    reason = models.CharField(_("reason"), max_length=20, choices=FLAG_REASONS)
+
+    class Meta:
+        unique_together = [("post", "user")]
+
+    def __str__(self):
+        return f"{self.post} -> {self.user}"
+
+    @classmethod
+    def flag(cls, post_id, user_id, reason):
+        return cls.objects.update_or_create(post_id=post_id, user_id=user_id, reason=reason)
+
+    @classmethod
+    def flag_spam(cls, post_id, user_id):
+        return cls.flag(post_id, user_id, "spam")
+
+    @classmethod
+    def flag_off_topic(cls, post_id, user_id):
+        return cls.flag(post_id, user_id, "off_topic")

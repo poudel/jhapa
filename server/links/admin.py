@@ -1,6 +1,6 @@
 from django.contrib import admin
 from mptt.admin import MPTTModelAdmin
-from links.models import Post
+from links.models import Post, Vote, Flag
 
 
 @admin.register(Post)
@@ -19,8 +19,6 @@ class PostAdmin(MPTTModelAdmin):
         "status",
         "created_at",
         "modified_at",
-        "upvotes",
-        "downvotes",
     )
     mptt_indent_field = "__str__"
     mptt_level_indent = 10
@@ -28,3 +26,14 @@ class PostAdmin(MPTTModelAdmin):
     # pylint: disable=no-member, protected-access
     mmeta = Post._mptt_meta
     ordering = ["-id", mmeta.tree_id_attr, mmeta.left_attr]
+
+
+@admin.register(Vote)
+class VoteAdmin(admin.ModelAdmin):
+    list_display = ["__str__", "remarks"]
+    list_select_related = ["post", "user"]
+
+
+@admin.register(Flag)
+class FlagAdmin(admin.ModelAdmin):
+    list_display = ["__str__", "reason"]
