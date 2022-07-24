@@ -1,8 +1,7 @@
-django==2.2.0
-django-mptt==0.10.0
-bleach==3.1.0
-Pillow==6.1.0
-psycopg2==2.8.3
-django-registration==3.0
+django
+django-mptt
+bleach
+Pillow
+django-registration
 
 gunicorn

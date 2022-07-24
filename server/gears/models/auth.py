@@ -4,7 +4,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin, UserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.contrib.sites.models import Site
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from gears.models.base import BaseModel
 
 

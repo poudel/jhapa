@@ -29,11 +29,5 @@ class Command(BaseCommand):
         else:
             call_command("createsuperuser")
 
-        if not Post.objects.exists():
-            self.stdout.write("Load links.Post.json")
-            call_command("loaddata", "links.Post.json")
-        else:
-            self.stdout.write("Skip links.Post.json because post table not empty")
-
         self.stdout.write("Load flatpages.json")
         call_command("loaddata", "flatpages.json")

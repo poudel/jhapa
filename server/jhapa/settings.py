@@ -87,10 +87,8 @@ WSGI_APPLICATION = 'jhapa.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DJANGO_DB_NAME', 'jhapa'),
-        'USER': os.environ.get('DJANGO_DB_USER', 'jhapa'),
-        'PASSWORD': os.environ.get('DJANGO_DB_PASSWORD', 'jhapa'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
 
